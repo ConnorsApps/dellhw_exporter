@@ -1,3 +1,37 @@
+## 1.13.9 / 2024-02-16
+
+* [BUGFIX] log the command that failed to execute
+
+## 1.13.8 / 2024-02-16
+
+* [BUGFIX] fix vdisk for (older?) omreport outputs
+
+## 1.13.7 / 2024-02-15
+
+* [CHORE] updated minimum go version to 1.21
+
+## 1.13.6 / 2024-02-15
+
+* [BUGFIX] add vdisk read and write policy to vdisk collector to address final parts of [#93](https://github.com/galexrt/dellhw_exporter/issues/93)
+
+## 1.13.5 / 2024-02-15
+
+* [BUGFIX] add "Non-Raid" state to pdisk collector to address parts of [#93](https://github.com/galexrt/dellhw_exporter/issues/93)
+* [BUGFIX] add logging to vdisk collector
+
+## 1.13.4 / 2024-02-13
+
+* [BUGFIX] add logging to pdisk collector
+
+## 1.13.3 / 2024-02-13
+
+* [BUGFIX] improve log lines to better be able to pin point the recent parsing issues
+
+## 1.13.2 / 2024-02-06
+
+* [BUGFIX] [Consider 'Not Applicable' as healthy for Nic status #95](https://github.com/galexrt/dellhw_exporter/pull/95)
+    * Thanks to [@B0go](https://github.com/B0go) for fixing this issue!
+
 ## 1.13.1 / 2023-12-07
 
 * [BUGFIX] Fix container image build issue caused by wget, use curl now

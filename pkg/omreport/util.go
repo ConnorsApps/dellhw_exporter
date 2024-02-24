@@ -91,6 +91,7 @@ func pdiskState(s string) string {
 		"Foreign":              "11",
 		"Unsupported":          "12",
 		"Replacing":            "13",
+		"Non-RAID":             "14",
 	}
 
 	return states[s]
@@ -122,6 +123,7 @@ func vdiskReadPolicy(s string) string {
 		"No Read Ahead":       "2",
 		"Read Cache Enabled":  "3",
 		"Read Cache Disabled": "4",
+		"Adaptive Read Ahead": "5",
 	}
 
 	return policies[s]
@@ -136,6 +138,7 @@ func vdiskWritePolicy(s string) string {
 		"Write Through":                 "4",
 		"Write Cache Enabled Protected": "5",
 		"Write Cache Disabled":          "6",
+		"Write Back":                    "7",
 	}
 
 	return policies[s]
@@ -241,19 +244,19 @@ func readCommand(line func(string) error, name string, arg ...string) error {
 
 // ReadCommandTimeout is the same as ReadCommand with a specifiable timeout.
 // It can also take a []byte as input (useful for chaining commands).
-func readCommandTimeout(timeout time.Duration, line func(string) error, stdin io.Reader, name string, arg ...string) error {
-	b, err := Command(timeout, stdin, name, arg...)
+func readCommandTimeout(timeout time.Duration, line func(string) error, stdin io.Reader, name string, args ...string) error {
+	b, err := Command(timeout, stdin, name, args...)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to execute command (\"%s %s\"). %w", name, args, err)
 	}
 	scanner := bufio.NewScanner(b)
 	for scanner.Scan() {
 		if err := line(scanner.Text()); err != nil {
-			return err
+			return fmt.Errorf("failed to read command (\"%s %s\") output. %w", name, args, err)
 		}
 	}
 	if err := scanner.Err(); err != nil {
-		log.Error(name, " : ", err)
+		log.Errorf("failed to scan command (\"%s %s\") output. %v", name, args, err)
 	}
 	return nil
 }

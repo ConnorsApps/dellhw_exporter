@@ -118,22 +118,27 @@ See [Troubleshooting doc page](docs/troubleshooting.md).
 
 ## Development
 
-Golang version `1.18` is used for testing and building the dellhw_exporter.
+Golang version `1.21` is used for testing and building the dellhw_exporter.
 
 `go mod` is used for "vendoring" of the dependencies.
 
 ### Creating a new Release
 
-1. Update the version in the [`VERSION` file](VERSION).
+1. Update the version.
+    1. [`VERSION` file](VERSION)
+    2. Helm chart: `charts/dellhw_exporter/Chart.yaml` `appVersion:` line and bump the Helm chart `version:` by a patch release version.
 2. Create an entry in the [`CHANGELOG.md` file](CHANGELOG.md).
     Example of a changelog entry:
+
     ```
     ## 1.12.0 / 2022-02-02
 
     * [ENHANCEMENT] Added Pdisk Remaining Rated Write Endurance Metric by @adityaborgaonkar
     * [BUGFIX] ci: fix build routine issues
     ```
+
     The following "kinds" of entries can be added:
+
     * `CHANGE`
     * `FEATURE`
     * `ENHANCEMENT`
